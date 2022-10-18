@@ -1,0 +1,36 @@
+import { initializeApp, cert } from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
+
+
+import serviceAccount from './serviceAccount.js';
+
+
+initializeApp({
+    credential: cert(serviceAccount)
+}); 
+
+const db = getFirestore(); 
+
+// LET'S DO SOME CRUD!
+
+// 1. CREATE:
+
+db.collection('instructors').add({
+    name: 'Cassie', 
+    position: 'Project Director',
+})
+    .then(doc => console.log('New Instructor:', doc.id))
+    .catch(console.error)
+
+//2. READ:
+    db.collection('instructors').doc().get()  
+
+    .then(doc => console.log(doc.data))
+    .catch(console.error)
+  
+ db.collection('instructors').where('name', '==', 'Cassie').get()  
+    .then(collection => {
+
+    })
+    .catch(console.error)
+  
